@@ -1,2 +1,21 @@
 #!/usr/bin/env bash
-set -e
+set -eo pipefail
+
+source /dev/stdin <<< "$(curl -Lsm 2 https://get.belt.sh)"
+
+main() {
+  local host="$1"
+
+  [[ -z "$host" ]] && echo "Error: missing argument host" && exit 1
+
+  belt_begin_session "root" "$host"
+
+  echo "Installing caddy..."
+  caddy_install
+
+  echo "Starting caddy..."
+  caddy_start
+}
+
+echo "Provisioning HTTP server..."
+main "$1"
