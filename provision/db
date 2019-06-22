@@ -1,2 +1,25 @@
 #!/usr/bin/env bash
-set -e
+set -eo pipefail
+
+source /dev/stdin <<< "$(curl -Lsm 2 https://get.belt.sh)"
+
+main() {
+  local host="$1"
+  local password="$2"
+
+  [[ -z "$host" ]] && echo "Error: missing argument host" && exit 1
+
+  belt_begin_session "root" "$host"
+
+  echo "Installing postgres..."
+  postgres_install
+
+  echo "Uploading pg_hba.conf..."
+  belt_remote_upload "provision/files/postgres/pg_hba.conf"
+
+  echo "Restarting postgres..."
+  systemd_unit_restart "postgresql@11-main"
+}
+
+echo "Provisioning postgres..."
+main "$1" "$2"

@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+source /dev/stdin <<< "$(curl -Lsm 2 https://get.belt.sh)"
+
+main() {
+  local host="$1"
+  local password="$2"
+
+  [[ -z "$host" ]] && echo "Error: missing argument host" && exit 1
+  [[ -z "$password" ]] && echo "Error: missing argument password" && exit 1
+
+  belt_begin_session "root" "$host"
+
+  echo "Creating database..."
+  postgres_create_database "memoir"
+
+  echo "Creating role..."
+  postgres_create_role "memoir" "$password"
+
+  echo "Granting privileges..."
+  postgres_add_role_to_db "memoir" "memoir"
+}
+
+echo "Provisioning database..."
+main "$1" "$2"
