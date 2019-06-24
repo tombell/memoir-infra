@@ -29,4 +29,5 @@ main() {
   caddy_restart
 }
 
+echo "Deploying memoir-app..."
 main "$1"

@@ -16,10 +16,10 @@ main() {
   echo "Uploading app archive..."
   app_upload "$ARCHIVE_FILE"
 
-  echo "Stopping memoir..."
+  echo "Stopping process..."
   systemd_unit_stop "memoir"
 
-  echo "Setting up memoir user..."
+  echo "Setting up user..."
   user_add "memoir"
 
   echo "Copying files..."
@@ -29,10 +29,10 @@ main() {
   echo "Setting up permissions..."
   app_set_permissions "memoir:memoir"
 
-  echo "Copying memoir unit file..."
+  echo "Copying unit file..."
   systemd_add_unit "memoir.service"
 
-  echo "Starting memoir..."
+  echo "Starting process..."
   systemd_unit_start "memoir"
 
   echo "Adding caddy vhost..."
@@ -42,4 +42,5 @@ main() {
   caddy_restart
 }
 
+echo "Deploying memoir..."
 main "$1"
