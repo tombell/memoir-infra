@@ -10,12 +10,14 @@ main() {
 
   belt_begin_session "root" "$host"
 
-  echo "Installing caddy..."
+  echo -n "==> Installing caddy"
   caddy_install
+  echo "  OK"
 
-  echo "Starting caddy..."
+  echo -n "==> Starting caddy"
   caddy_start
+  echo "  OK"
 }
 
-echo "Provisioning HTTP server..."
+echo "=> Provisioning HTTP server"
 main "$1"

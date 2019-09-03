@@ -12,15 +12,18 @@ main() {
 
   belt_begin_session "root" "$host"
 
-  echo "Creating database..."
+  echo -n "==> Creating database"
   postgres_create_database "memoir"
+  echo "  OK"
 
-  echo "Creating role..."
+  echo -n "==> Creating role"
   postgres_create_role "memoir" "$password"
+  echo "  OK"
 
-  echo "Granting privileges..."
+  echo -n "==> Granting privileges"
   postgres_add_role_to_db "memoir" "memoir"
+  echo "  OK"
 }
 
-echo "Provisioning database..."
+echo "=> Provisioning database"
 main "$1" "$2"

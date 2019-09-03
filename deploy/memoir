@@ -13,34 +13,43 @@ main() {
 
   belt_begin_session "root" "$host"
 
-  echo "Uploading app archive..."
+  echo -n "==> Uploading app archive"
   app_upload "$ARCHIVE_FILE"
+  echo "  OK"
 
-  echo "Stopping process..."
+  echo -n "==> Stopping process"
   systemd_unit_stop "memoir"
+  echo "  OK"
 
-  echo "Setting up user..."
+  echo -n "==> Setting up user"
   user_add "memoir"
+  echo "  OK"
 
-  echo "Copying files..."
+  echo -n "==> Copying files"
   app_copy_file "dist/memoir"
   app_copy_file "memoir.env"
+  echo "  OK"
 
-  echo "Setting up permissions..."
+  echo -n "==> Setting up permissions"
   app_set_permissions "memoir:memoir"
+  echo "  OK"
 
-  echo "Copying unit file..."
+  echo -n "==> Copying unit file"
   systemd_add_unit "memoir.service"
+  echo "  OK"
 
-  echo "Starting process..."
+  echo -n "==> Starting process"
   systemd_unit_start "memoir"
+  echo "  OK"
 
-  echo "Adding caddy vhost..."
+  echo -n "==> Adding caddy vhost"
   app_add_caddy_vhost
+  echo "  OK"
 
-  echo "Restarting caddy..."
+  echo -n "==> Restarting caddy"
   caddy_restart
+  echo "  OK"
 }
 
-echo "Deploying memoir..."
+echo "=> Deploying memoir"
 main "$1"

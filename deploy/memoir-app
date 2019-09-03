@@ -13,21 +13,26 @@ main() {
 
   belt_begin_session "root" "$host"
 
-  echo "Uploading app archive..."
+  echo -n "==> Uploading app archive"
   app_upload "$ARCHIVE_FILE"
+  echo "  OK"
 
-  echo "Copying files..."
+  echo -n "==> Copying files"
   app_copy_directory "public"
+  echo "  OK"
 
-  echo "Setting up permissions..."
+  echo -n "==> Setting up permissions"
   app_set_permissions "www-data:www-data"
+  echo "  OK"
 
-  echo "Adding caddy vhost..."
+  echo -n "==> Adding caddy vhost"
   app_add_caddy_vhost
+  echo "  OK"
 
-  echo "Restarting caddy..."
+  echo -n "==> Restarting caddy"
   caddy_restart
+  echo " OK"
 }
 
-echo "Deploying memoir-app..."
+echo "=> Deploying memoir-app"
 main "$1"

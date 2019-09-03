@@ -11,15 +11,18 @@ main() {
 
   belt_begin_session "root" "$host"
 
-  echo "Installing postgres..."
+  echo -n "==> Installing postgres"
   postgres_install
+  echo "  OK"
 
-  echo "Uploading pg_hba.conf..."
+  echo -n "==> Uploading pg_hba.conf"
   belt_remote_upload "files/postgres/pg_hba.conf"
+  echo "  OK"
 
-  echo "Restarting postgres..."
+  echo -n "==> Restarting postgres"
   systemd_unit_restart "postgresql@11-main"
+  echo "  OK"
 }
 
-echo "Provisioning postgres..."
+echo "=> Provisioning postgres"
 main "$1" "$2"
