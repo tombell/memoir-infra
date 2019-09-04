@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+if [[ ! -x "$(command -v doctl)" ]]; then
+  echo "doctl command not found, please install it."
+  exit 1
+fi
+
+main() {
+  local id="$1"
+
+  [[ -z "$id" ]] && echo "Error: missing argument droplet ID" && exit 1
+
+  doctl compute droplet delete "$id" --force
+}
+
+echo "=> Destroying server"
+main "$1" "$2"
