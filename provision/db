@@ -15,10 +15,6 @@ main() {
   postgres_install
   echo "  OK"
 
-  echo -n "==> Uploading pg_hba.conf"
-  belt_remote_upload "files/postgres/pg_hba.conf"
-  echo "  OK"
-
   echo -n "==> Restarting postgres"
   systemd_unit_restart "postgresql@11-main"
   echo "  OK"
