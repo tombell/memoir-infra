@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
+BELT_ENV_TOOLBOX_TOOLS="caddy"
+
 source /dev/stdin <<< "$(curl -Lsm 2 https://get.belt.sh)"
 
 ARCHIVE_FILE="/tmp/memoir.tar.gz"
@@ -13,42 +15,42 @@ main() {
 
   belt_begin_session "root" "$host"
 
-  echo -n "==> Uploading app archive"
+  echo -n "==> Uploading app archive "
   app_upload "$ARCHIVE_FILE"
-  echo "  OK"
+  echo "OK"
 
-  echo -n "==> Stopping process"
-  systemd_unit_stop "memoir"
-  echo "  OK"
+  echo -n "==> Stopping process "
+  # systemd_unit_stop "memoir"
+  echo "OK"
 
-  echo -n "==> Setting up user"
+  echo -n "==> Setting up user "
   user_add "memoir"
-  echo "  OK"
+  echo "OK"
 
-  echo -n "==> Copying files"
+  echo -n "==> Copying files "
   app_copy_file "dist/memoir"
   app_copy_file ".env"
-  echo "  OK"
+  echo "OK"
 
-  echo -n "==> Setting up permissions"
+  echo -n "==> Setting up permissions "
   app_set_permissions "memoir:memoir"
-  echo "  OK"
+  echo "OK"
 
-  echo -n "==> Copying unit file"
+  echo -n "==> Copying unit file "
   systemd_add_unit "memoir.service"
-  echo "  OK"
+  echo "OK"
 
-  echo -n "==> Starting process"
+  echo -n "==> Starting process "
   systemd_unit_start "memoir"
-  echo "  OK"
+  echo "OK"
 
-  echo -n "==> Adding caddy vhost"
-  app_add_caddy_vhost
-  echo "  OK"
+  echo -n "==> Adding caddy vhost "
+  caddy_add_vhost
+  echo "OK"
 
-  echo -n "==> Restarting caddy"
+  echo -n "==> Restarting caddy "
   caddy_restart
-  echo "  OK"
+  echo "OK"
 }
 
 echo "=> Deploying memoir"
