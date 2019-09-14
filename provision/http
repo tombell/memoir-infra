@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
+BELT_ENV_TOOLBOX_TOOLS="caddy"
+
 source /dev/stdin <<< "$(curl -Lsm 2 https://get.belt.sh)"
 
 main() {
@@ -10,13 +12,13 @@ main() {
 
   belt_begin_session "root" "$host"
 
-  echo -n "==> Installing caddy"
+  echo -n "==> Installing caddy "
   caddy_install
-  echo "  OK"
+  echo "OK"
 
-  echo -n "==> Starting caddy"
+  echo -n "==> Starting caddy "
   caddy_start
-  echo "  OK"
+  echo "OK"
 }
 
 echo "=> Provisioning HTTP server"
