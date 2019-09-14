@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
+BELT_ENV_TOOLBOX_TOOLS="caddy"
+
 source /dev/stdin <<< "$(curl -Lsm 2 https://get.belt.sh)"
 
 ARCHIVE_FILE="/tmp/memoir-app.tar.gz"
@@ -13,25 +15,25 @@ main() {
 
   belt_begin_session "root" "$host"
 
-  echo -n "==> Uploading app archive"
+  echo -n "==> Uploading app archive "
   app_upload "$ARCHIVE_FILE"
-  echo "  OK"
+  echo "OK"
 
-  echo -n "==> Copying files"
+  echo -n "==> Copying files "
   app_copy_directory "public"
-  echo "  OK"
+  echo "OK"
 
-  echo -n "==> Setting up permissions"
+  echo -n "==> Setting up permissions "
   app_set_permissions "www-data:www-data"
-  echo "  OK"
+  echo "OK"
 
-  echo -n "==> Adding caddy vhost"
-  app_add_caddy_vhost
-  echo "  OK"
+  echo -n "==> Adding caddy vhost "
+  caddy_add_vhost
+  echo "OK"
 
-  echo -n "==> Restarting caddy"
+  echo -n "==> Restarting caddy "
   caddy_restart
-  echo " OK"
+  echo "OK"
 }
 
 echo "=> Deploying memoir-app"
