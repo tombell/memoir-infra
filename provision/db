@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
+BELT_ENV_TOOLBOX_TOOLS="postgresql"
+
 source /dev/stdin <<< "$(curl -Lsm 2 https://get.belt.sh)"
 
 main() {
@@ -11,13 +13,13 @@ main() {
 
   belt_begin_session "root" "$host"
 
-  echo -n "==> Installing postgres"
-  postgres_install
-  echo "  OK"
+  echo -n "==> Installing postgresql "
+  postgresql_install
+  echo "OK"
 
-  echo -n "==> Restarting postgres"
-  systemd_unit_restart "postgresql@11-main"
-  echo "  OK"
+  echo -n "==> Restarting postgresql "
+  postgresql_restart
+  echo "OK"
 }
 
 echo "=> Provisioning postgres"
