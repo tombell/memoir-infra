@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
+BELT_ENV_TOOLBOX_TOOLS="postgresql"
+
 source /dev/stdin <<< "$(curl -Lsm 2 https://get.belt.sh)"
 
 main() {
@@ -12,17 +14,17 @@ main() {
 
   belt_begin_session "root" "$host"
 
-  echo -n "==> Creating database"
-  postgres_create_database "memoir"
-  echo "  OK"
+  echo -n "==> Creating database "
+  postgresql_create_database "memoir"
+  echo "OK"
 
-  echo -n "==> Creating role"
-  postgres_create_role "memoir" "$password"
-  echo "  OK"
+  echo -n "==> Creating role "
+  postgresql_create_role "memoir" "$password"
+  echo "OK"
 
-  echo -n "==> Granting privileges"
-  postgres_add_role_to_db "memoir" "memoir"
-  echo "  OK"
+  echo -n "==> Granting privileges "
+  postgresql_add_role_to_database "memoir" "memoir"
+  echo "OK"
 }
 
 echo "=> Provisioning database"
