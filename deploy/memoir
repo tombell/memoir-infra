@@ -20,7 +20,7 @@ main() {
   echo "OK"
 
   echo -n "==> Stopping process "
-  # systemd_unit_stop "memoir"
+  systemd_unit_stop "memoir"
   echo "OK"
 
   echo -n "==> Setting up user "
