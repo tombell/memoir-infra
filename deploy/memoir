@@ -29,7 +29,7 @@ main() {
 
   echo -n "==> Copying files "
   app_copy_file "dist/memoir"
-  app_copy_file ".env"
+  app_copy_file ".env.toml"
   echo "OK"
 
   echo -n "==> Setting up permissions "
